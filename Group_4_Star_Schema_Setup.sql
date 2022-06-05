@@ -1,13 +1,17 @@
 use Group_Project
 GO
 
+
+
 --Union final dataset
 select *
 into dbo.inf_data_upload_final
 from dbo.inf_data_upload2
+where inf_value<>0
 UNION
 select *
 from dbo.inf_data_upload3
+where inf_value<>0
 
 
 --Create and load data table
@@ -18,6 +22,7 @@ create table Date_Detail (
     Month varchar(100) NOT NULL,
     Seasonal_Adj varchar(100) NOT NULL,
     PRIMARY KEY (Date_ID));
+
 
 INSERT INTO Date_Detail (Date_ID,Year,Month,Seasonal_Adj)
 SELECT Distinct 
@@ -64,6 +69,7 @@ select distinct
             ,'Shelter') then NULL else item_description END
 	,item_description
 from dbo.inf_data_upload_final;
+
 
 create table Data_Source (
 	Source_ID varchar(100) NOT NULL,
